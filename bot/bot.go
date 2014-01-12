@@ -128,24 +128,37 @@ func (r *ReplayMsg) Text(content string) {
     r.Content = content
 }
 
-func (r *ReplayMsg) Img() {
+func (r *ReplayMsg) Img(pic_url, media_id string) {
     r.MsgType = "image"
+    r.PicUrl = pic_url
+    r.MediaId = media_id
 }
 
-func (r *ReplayMsg) Voice() {
+func (r *ReplayMsg) Voice(media_id, format string) {
     r.MsgType = "voice"
+    r.MediaId = media_id
+    r.Format = format
 }
 
 func (r *ReplayMsg) Video() {
     r.MsgType = "video"
+    r.MediaId = media_id
+    r.ThumbMediaId = thumb_media_id
 }
 
-func (r *ReplayMsg) Location() {
+func (r *ReplayMsg) Location(location_x, location_y, label string, scale int) {
     r.MsgType = "location"
+    r.Location_X = location_x
+    r.Location_Y = location_y
+    r.Scale = scale
+    r.Label = label
 }
 
-func (r *ReplayMsg) Link() {
+func (r *ReplayMsg) Link(title, description, url string) {
     r.MsgType = "link"
+    r.Title = title
+    r.Description = description
+    r.Url = url
 }
 
 // func (r *ReplayMsg) ReplayEvent() {
