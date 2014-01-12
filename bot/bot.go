@@ -68,8 +68,8 @@ func NewWeiBot() *WeiBot {
 }
 
 //Register args
-func (wbot *WeiBot) On_connect(signature, timestamp, nonce, echostr string) {
-    fmt.Println("on_connect: ", signature, timestamp, nonce, echostr)
+func (wbot *WeiBot) OnConnect(signature, timestamp, nonce, echostr string) {
+    // fmt.Println("on_connect: ", signature, timestamp, nonce, echostr)
     wbot.Signature = signature
     wbot.Timestamp = timestamp
     wbot.Nonce = nonce
@@ -83,7 +83,7 @@ func (w *WeiBot) Validate() (is_true bool, echstr string) {
     str_li := strings.Join(li, "")
 
     _Signature := rtn_sha1(str_li)
-    fmt.Println(_Signature)
+    // fmt.Println(_Signature)
 
     if _Signature == w.Signature {
         return true, w.Echostr
@@ -92,7 +92,7 @@ func (w *WeiBot) Validate() (is_true bool, echstr string) {
     }
 }
 
-func (w *WeiBot) On_msg(xmlbody []byte) {
+func (w *WeiBot) OnMessage(xmlbody []byte) {
     // w.XMLBody = xmlbody
     w.parse_msg(xmlbody)
 }
@@ -106,7 +106,7 @@ func (w *WeiBot) parse_msg(xmlbody []byte) {
     }
 }
 
-func (w *WeiBot) Replay_msg() ReplayMsg {
+func (w *WeiBot) ReplayMessage() ReplayMsg {
     var replay ReplayMsg
     replay.ToUserName = w.Message.FromUserName
     replay.FromUserName = w.Message.ToUserName

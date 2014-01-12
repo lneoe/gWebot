@@ -1,9 +1,10 @@
-package handler
+package main
 
 import (
     "fmt"
-    "gobot/bot"
+    "gwebot/bot"
     "io/ioutil"
+    "log"
     "net/http"
 )
 
@@ -16,7 +17,7 @@ func ReciveMsgHandler(w http.ResponseWriter, r *http.Request) {
     timestamp := r.FormValue("timestamp")
     nonce := r.FormValue("nonce")
     echostr := r.FormValue("echostr")
-    weibot.On_connect(signature, timestamp, nonce, echostr)
+    weibot.OnConnect(signature, timestamp, nonce, echostr)
 
     if vali, _echostr := weibot.Validate(); vali {
 
@@ -30,8 +31,8 @@ func ReciveMsgHandler(w http.ResponseWriter, r *http.Request) {
             if err != nil {
                 fmt.Printf("error: %v\n", err)
             } else {
-                weibot.On_msg(xmlbody)
-                replay := weibot.Replay_msg()
+                weibot.OnMessage(xmlbody)
+                replay := weibot.ReplayMessage()
                 text_content := "Content for text type test!"
                 replay.Text(text_content)
                 fmt.Fprintf(w, replay.ToString())
@@ -42,4 +43,12 @@ func ReciveMsgHandler(w http.ResponseWriter, r *http.Request) {
         fmt.Println("Invalidate!")
     }
 
+}
+
+func main() {
+    http.HandleFunc("/gWebot", ReciveMsgHandler)
+    err := http.ListenAndServe("127.0.0.1:8000", nil)
+    if err != nil {
+        log.Fatal("ListenAndServe: ", err)
+    }
 }
