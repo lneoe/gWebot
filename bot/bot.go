@@ -48,7 +48,7 @@ type ReceivedMsg struct {
     ThumbMediaId string `xml:"ThumbMediaId,omitempty"`
     Location_X   string `xml:"Location_X,omitempty"`
     Location_Y   string `xml:"Location_Y,omitempty"`
-    Scale        string `xml:"Scale,omitempty"`
+    Scale        int    `xml:"Scale,omitempty"`
     Label        string `xml:"Label,omitempty"`
     Title        string `xml:"Title,omitempty"`
     Description  string `xml:"Description,omitempty"`
@@ -140,7 +140,7 @@ func (r *ReplayMsg) Voice(media_id, format string) {
     r.Format = format
 }
 
-func (r *ReplayMsg) Video() {
+func (r *ReplayMsg) Video(media_id, thumb_media_id string) {
     r.MsgType = "video"
     r.MediaId = media_id
     r.ThumbMediaId = thumb_media_id
